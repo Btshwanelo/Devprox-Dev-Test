@@ -11,13 +11,13 @@ const UserSchema = new mongoose.Schema({
     required: [true, 'must provide surname'],
     maxlength: [25, 'name can not be more than 25 characters'],
   },
-  id_no: {
+  idNo: {
     type: Number,
     required: [true, 'must provide id number'],
     maxlength: 13,
     trim: true
   },
-  DoB: {
+  dateOfBirth: {
     type: String,
     required: [true, 'must provide date of birth'],
   },
