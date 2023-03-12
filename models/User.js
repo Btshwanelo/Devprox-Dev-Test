@@ -14,7 +14,7 @@ const UserSchema = new mongoose.Schema({
   idNo: {
     type: Number,
     required: [true, 'must provide id number'],
-    maxlength: 13,
+    length: 13,
     trim: true
   },
   dateOfBirth: {
