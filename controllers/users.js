@@ -1,5 +1,4 @@
 const User = require('../models/User')
-const {BadRequestError} = require('../errors')
 
 const createUser = async (req, res) => {
   const {name, surname, idNo, dateOfBirth} = req.body
@@ -9,38 +8,38 @@ const createUser = async (req, res) => {
   const user = await User.findOne({ idNo })
 
   if(user){
-    throw new BadRequestError(`User with ${idNo} already exist`)
-  }
-
-  if(idNo.toString().length !== 13){
-    throw new BadRequestError(`Id number must be 13 characters`)
+   return res.status(201).json( {msg: `User with ${idNo} already exist`})
   }
 
   if(!name){
-    throw new BadRequestError(`Please provide name`)
+    return res.status(201).json({ msg: `Please provide name`})
   }
 
   if(!specialCharacterRegex.test(name)){
-    throw new BadRequestError(`Please provide valid name with no special characters`)
+    return res.status(201).json({ msg:`Please provide valid name with no special characters`})
   }
 
   if(!surname){
-    throw new BadRequestError(`Please provide surname`)
+    return res.status(201).json({ msg:`Please provide surname`})
   }
 
   if(!specialCharacterRegex.test(surname)){
-    throw new BadRequestError(`Please provide valid surname with no special characters`)
+    return res.status(201).json({ msg: `Please provide valid surname with no special characters`})
   }
 
   const dateRegex = /^(0[1-9]|[1-2]\d|3[0-1])\/(0[1-9]|1[0-2])\/\d{4}$/;
   
   // Test if the input matches the date format
   if (!dateRegex.test(dateOfBirth)) {
-    throw new BadRequestError(`Date format must be dd/mm/YYYY`)
+    return res.status(201).json({ msg: `Date format must be dd/mm/YYYY`})
+  }
+
+  if(idNo?.toString().length !== 13){
+    return res.status(201).json({msg: `Invalid Id \n Id number must be 13 characters`, user: {name, surname, idNo, dateOfBirth} })
   }
 
   const newUser = await User.create(req.body);
-  res.status(200).json({ newUser });
+  res.status(200).json({ msg: 'success', newUser });
 };
 
 const getUsers = async (req, res) => {
