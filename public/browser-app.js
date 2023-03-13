@@ -1,12 +1,11 @@
 const url = '/api/v1/records'
 
 window.onload = function(e){
-  var tbody=document.getElementById('container1');
+  var tbody=document.getElementById('container');
   fetch(url)
   .then(res => res.json())
   .then(data =>{
-    console.log("data",data.count)
-    tbody.innerHTML = `<h1> there are ${data.count} imported records</h1>`
+    tbody.innerHTML = `<h4> there are ${data.count} imported records</h4>`
     }).catch((e)=>console.log(e))
 }
 
